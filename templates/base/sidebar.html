@@ -1,0 +1,30 @@
+{% load static %}
+<div class="sidebar">
+    <nav class="sidebar-nav">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}"><i class="icon-speedometer"></i> Dashboard</a>
+            </li>
+
+            <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#">
+                <i class="nav-icon icon-puzzle"></i> Administration</a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'teacher-list' %}">
+                            <i class="nav-icon icon-puzzle"></i> Teacher List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="base/cards.html">
+                            <i class="nav-icon icon-puzzle"></i> Cteate Teacher</a>
+                    </li>
+                    
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+
+    {% block sidebar %}
+    {% endblock %}
+</div>
