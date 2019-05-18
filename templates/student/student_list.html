@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header">
+        <i class="fa fa-align-justify"></i> Student List</div>
+    <div class="card-body">
+        <table class="table table-responsive-sm table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Father Name</th>
+                    <th>Gender</th>
+                    <th>Class</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+            <tr>
+                <th scope="row"> {{ forloop.counter }} </th>
+                <td> {{ student.student.name }} </td>
+                <td> {{ student.student.fathers_name }} </td>
+                <td> {{ student.student.gender }} </td>
+                <td> {{ student.std_class }} </td>
+                <td>
+                    <a href="" target="_blank" class="btn btn-primary">Edit</a>
+                    <a href="" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+            
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
