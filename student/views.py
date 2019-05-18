@@ -1,6 +1,25 @@
 from django.shortcuts import render, redirect
 from .models import StudentInfo, StudentDetailInfo
-from .forms import StudentRegistrationForm
+from .forms import StudentRegistrationForm, SearchStudentForm
+
+def search_student(request):
+    forms = SearchStudentForm(request.GET or None)
+    std_class = request.GET.get('student_class', None)
+    section = request.GET.get('section', None)
+    std_roll = request.GET.get('roll', None)
+    session = request.GET.get('session', None)
+    if std_class and section:
+        students = StudentDetailInfo.objects.filter(std_class__id=std_class, std_section=section)
+        if std_roll:
+            students = students.filter(student__roll=std_roll)
+        if session:
+            students = students.filter(session=session)
+        context = {'forms': forms, 'students': students}
+        return render(request, 'student/search.html', context)
+
+    context = {'forms': forms}
+    return render(request, 'student/search.html', context)
+
 
 def student_list(request):
     std = StudentDetailInfo.objects.all()

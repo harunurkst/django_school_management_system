@@ -2,6 +2,13 @@ from django import forms
 from .models import StudentClassInfo, StudentShiftInfo
 
 
+class SearchStudentForm(forms.Form):
+    student_class = forms.ModelChoiceField(queryset=StudentClassInfo.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))
+    section = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    roll = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    session = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={'class': 'form-control'}))
+
+
 class StudentRegistrationForm(forms.Form):
     name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     roll = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))

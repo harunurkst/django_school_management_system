@@ -2,6 +2,8 @@ from django import forms
 from .models import TeacherInfo
 
 
+
+
 class TeacherForm(forms.ModelForm):
     class Meta:
         model = TeacherInfo
