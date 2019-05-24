@@ -88,13 +88,16 @@ def edit_student(request, pk):
     student_detail = StudentDetailInfo.objects.get(id=pk)
     student_info = student_detail.student
 
-    form1 = StudentInfoForm(instance=student_info)
-    form2 = StudentDetailInfoForm(instance=student_detail)
+    form1 = StudentInfoForm(request.POST or None, instance=student_info)
+    form2 = StudentDetailInfoForm(request.POST or None, instance=student_detail)
 
     if request.method == 'POST':
         if form1.is_valid() and form2.is_valid():
-           form1 = StudentInfoForm(instance=student_info, request.POST)
-            form2 = StudentDetailInfoForm(instance=student_detail) 
+            std_obj = form1.save()
+            std_detail = form2.save(commit=False)
+            std_detail.student = std_obj
+            std_detail.save()
+            return redirect('student-list')
 
     context = {'form1': form1, 'form2': form2}
     return render(request, 'student/edit_std.html', context)
