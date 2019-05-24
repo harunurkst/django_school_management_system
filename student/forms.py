@@ -1,5 +1,5 @@
 from django import forms 
-from .models import StudentClassInfo, StudentShiftInfo
+from .models import StudentClassInfo, StudentShiftInfo, StudentInfo, StudentDetailInfo
 
 
 class SearchStudentForm(forms.Form):
@@ -26,4 +26,13 @@ class StudentRegistrationForm(forms.Form):
     section = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
 
 
+class StudentInfoForm(forms.ModelForm):
+    class Meta:
+        model = StudentInfo
+        fields = '__all__'
 
+
+class StudentDetailInfoForm(forms.ModelForm):
+    class Meta:
+        model = StudentDetailInfo
+        exclude = ('student', )

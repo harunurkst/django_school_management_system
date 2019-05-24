@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import StudentInfo, StudentDetailInfo
-from .forms import StudentRegistrationForm, SearchStudentForm
+from .forms import StudentRegistrationForm, SearchStudentForm, StudentDetailInfoForm, StudentInfoForm
 
 def search_student(request):
     forms = SearchStudentForm(request.GET or None)
@@ -25,6 +25,7 @@ def student_list(request):
     std = StudentDetailInfo.objects.all()
     context = {'students': std}
     return render(request, 'student/student_list.html', context)
+
 
 def create_student(request):
     forms = StudentRegistrationForm()
@@ -68,4 +69,32 @@ def create_student(request):
     return render(request, 'student/create_std.html', context)
 
 
+def register_student(request):
+    form1 = StudentInfoForm(request.POST or None)
+    form2 = StudentDetailInfoForm(request.POST or None)
+    if request.method == 'POST':
+        if form1.is_valid() and form2.is_valid():
+            std_obj = form1.save()
+            std_detail = form2.save(commit=False)
+            std_detail.student = std_obj
+            std_detail.save()
+            return redirect('student-list')
 
+    context = {'form1': form1, 'form2': form2}
+    return render(request, 'student/register_std.html', context)
+
+
+def edit_student(request, pk):
+    student_detail = StudentDetailInfo.objects.get(id=pk)
+    student_info = student_detail.student
+
+    form1 = StudentInfoForm(instance=student_info)
+    form2 = StudentDetailInfoForm(instance=student_detail)
+
+    if request.method == 'POST':
+        if form1.is_valid() and form2.is_valid():
+           form1 = StudentInfoForm(instance=student_info, request.POST)
+            form2 = StudentDetailInfoForm(instance=student_detail) 
+
+    context = {'form1': form1, 'form2': form2}
+    return render(request, 'student/edit_std.html', context)
