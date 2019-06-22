@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import StudentInfo, StudentDetailInfo
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .models import StudentInfo, StudentDetailInfo, Attendance
 from .forms import StudentRegistrationForm, SearchStudentForm, StudentDetailInfoForm, StudentInfoForm
 
 def search_student(request):
@@ -101,3 +103,13 @@ def edit_student(request, pk):
 
     context = {'form1': form1, 'form2': form2}
     return render(request, 'student/edit_std.html', context)
+
+
+@api_view()
+def std_attendance(request, std_cls, std_roll):
+    try:
+        Attendance.objects.create_attendance(std_cls, std_roll)
+        return Response({'status': 'success'})
+    except Exception as err:
+        print(err)
+        return Response({'status': 'failed'})
