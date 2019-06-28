@@ -1,8 +1,19 @@
 from django.shortcuts import render, redirect
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
 from .models import StudentInfo, StudentDetailInfo, Attendance
 from .forms import StudentRegistrationForm, SearchStudentForm, StudentDetailInfoForm, StudentInfoForm
+
+
+def attendance_count(request):
+    class_name = request.GET.get('class_name', None)
+    if class_name:
+        std_list = StudentDetailInfo.objects.filter(
+            std_class__class_short_form=class_name
+            ).order_by('roll')
+        context = {'std_list': std_list}
+    else:
+        context = {}
+    return render(request, 'student/att_count.html', context)
+
 
 def search_student(request):
     forms = SearchStudentForm(request.GET or None)
@@ -104,12 +115,3 @@ def edit_student(request, pk):
     context = {'form1': form1, 'form2': form2}
     return render(request, 'student/edit_std.html', context)
 
-
-@api_view()
-def std_attendance(request, std_cls, std_roll):
-    try:
-        Attendance.objects.create_attendance(std_cls, std_roll)
-        return Response({'status': 'success'})
-    except Exception as err:
-        print(err)
-        return Response({'status': 'failed'})

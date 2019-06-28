@@ -1,0 +1,48 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+            <div class="card">
+                    <div class="card-body">
+                        <form action="" method="GET">
+                            Class: <input type="text" name="class_name" class="">
+                            <input type="submit" value="Submit" class="btn btn-primary">
+                        </form>
+                    </div>
+                </div>
+    </div>
+    
+</div>
+{% if std_list %}
+
+<div class="card">
+    <div class="card-header">
+        Student list
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <tr>
+                <th>Roll</th>
+                <th>Name</th>
+                <th>Class</th>
+                <th>Action</th>
+            </tr>
+            {% for std in std_list %}
+            <tr>
+                <td class="cls_roll">{{ std.roll }}</td>
+                <td >{{ std.student.name }}</td>
+                <td class="cls_class">{{ std.std_class.class_short_form }}</td>
+                <td><button class="btn_class">Present</button></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+
+
+{% endif %}
+    
+    
+{% endblock %}
