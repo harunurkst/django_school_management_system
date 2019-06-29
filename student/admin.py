@@ -10,5 +10,6 @@ admin.site.register(StudentDetailInfo, DetailInfoAdmin)
 admin.site.register(StudentClassInfo)
 admin.site.register(StudentShiftInfo)
 admin.site.register(Attendance)
+admin.site.register(Result)
 
 

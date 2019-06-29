@@ -70,6 +70,14 @@ class Attendance(models.Model):
         return str(self.student.roll)
 
 
+class Result(models.Model):
+    board = models.CharField(max_length=10)
+    roll = models.IntegerField()
+    gpa = models.IntegerField()
+
+    def __str__(self):
+        return str(self.roll)
+
 
 
 
