@@ -61,7 +61,6 @@ def create_student(request):
                     name=std_name,
                     age=std_age,
                     gender=std_gender,
-                    roll=roll,
                     fathers_name=fathers_name,
                     address=address
 
@@ -69,6 +68,7 @@ def create_student(request):
 
                 StudentDetailInfo.objects.create(
                     student=std_obj,
+                    roll=roll,
                     std_class=std_class,
                     std_shift=std_shift,
                     std_section=std_section,
