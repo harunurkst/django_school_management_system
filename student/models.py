@@ -16,7 +16,6 @@ class StudentClassInfo(models.Model):
 
 
 class StudentInfo(models.Model):
-    
     fathers_name = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
     name = models.CharField(max_length=50)

@@ -4,8 +4,22 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from student.models import Attendance
-from .serializers import ResultSerializer
-from student.models import Result
+from .serializers import ResultSerializer, StudentInfoSerializer
+from student.models import Result, StudentInfo
+
+
+class StudentInfoView(APIView):
+    def get(self, request):
+        students = StudentInfo.objects.all()
+        std_serializer = StudentInfoSerializer(students, many=True)
+        return Response({'status': std_serializer.data}, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        serializer = StudentInfoSerializer(data=request.data, many=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'status': 'success'}, status=status.HTTP_200_OK)
+        return Response({'status': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view()
